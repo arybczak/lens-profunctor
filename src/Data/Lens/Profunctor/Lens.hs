@@ -42,11 +42,6 @@ vl l =
         (\(f, b) -> f b)
   . second' -- p (b -> t, a) (b -> t, b)
 
--- | Taken from mezzolens library. For more information see
--- https://r6research.livejournal.com/28432.html
-data PStore a b t = PStore (b -> t) a
-  deriving Functor
-
 ----------------------------------------
 
 _1_2 :: Lens a b (a, c) (b, c)

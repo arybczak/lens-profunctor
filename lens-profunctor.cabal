@@ -18,8 +18,8 @@ cabal-version:       >=1.10
 library
   exposed-modules:     Data.Bicontravariant
                        Data.Lens.Profunctor
-                       Data.Lens.Profunctor.AffFold
-                       Data.Lens.Profunctor.AffTraversal
+                       Data.Lens.Profunctor.AffineFold
+                       Data.Lens.Profunctor.AffineTraversal
                        Data.Lens.Profunctor.Fold
                        Data.Lens.Profunctor.Getter
                        Data.Lens.Profunctor.Iso
@@ -27,6 +27,7 @@ library
                        Data.Lens.Profunctor.Prism
                        Data.Lens.Profunctor.Re
                        Data.Lens.Profunctor.Review
+                       Data.Lens.Profunctor.Setter
                        Data.Lens.Profunctor.Traversal
                        Data.Lens.Profunctor.Types
 

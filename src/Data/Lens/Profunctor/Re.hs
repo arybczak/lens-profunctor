@@ -15,28 +15,22 @@ instance Profunctor p => Profunctor (Re p a b) where
   dimap f g (Re p) = Re (p . dimap g f)
 
 instance Bicontravariant p => Bifunctor (Re p a b) where
-  bimap f g (Re p) = Re (p . cimap g f)
+  bimap f g (Re p) = Re (p . contrabimap g f)
 
 instance Bifunctor p => Bicontravariant (Re p a b) where
-  cimap f g (Re p) = Re (p . bimap g f)
+  contrabimap f g (Re p) = Re (p . bimap g f)
 
 instance Choice p => Cochoice (Re p a b) where
-  unleft  (Re r) = Re (r . left')
-  unright (Re r) = Re (r . right')
+  unleft  (Re p) = Re (p . left')
+  unright (Re p) = Re (p . right')
 
 instance Cochoice p => Choice (Re p a b) where
-  left'  (Re r) = Re (r . unleft)
-  right' (Re r) = Re (r . unright)
-
-instance Strong p => Costrong (Re p a b) where
-  unfirst  (Re r) = Re (r . first')
-  unsecond (Re r) = Re (r . second')
-
-instance Costrong p => Strong (Re p a b) where
-  first'  (Re r) = Re (r . unfirst)
-  second' (Re r) = Re (r . unsecond)
+  left'  (Re p) = Re (p . unleft)
+  right' (Re p) = Re (p . unright)
 
 ----------------------------------------
 
+-- | Inverts optics, turning 'Iso' into 'Iso', 'Prism' into 'PrismaticGetter'
+-- (and back) and 'Getter' into 'Review' (and back).
 re :: Optic (Re p a b) a b s t -> Optic p t s b a
 re optic = unRe (optic (Re id))

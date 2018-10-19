@@ -47,7 +47,6 @@ withPrism :: Prism a b s t -> ((s -> Either t a) -> (b -> t) -> r) -> r
 withPrism optic k = case optic (PrismC Right id) of
                       PrismC match build -> k match build
 
-
 ----------------------------------------
 
 only :: Eq a => a -> Prism () () a a

@@ -27,9 +27,9 @@ import Data.Lens.Profunctor.Types
 -- | View the result of folding over all the results of a 'Fold' or 'Traversal'
 -- that points at a monoidal value.
 viewN :: Monoid a => Fold a b s t -> s -> a
-viewN optic = foldMapOf optic id
+viewN optic = runForget (optic (Forget id))
 
--- | Unrestricted version of 'affview'. Previews the first value of a 'Fold', if
+-- | Unrestricted version of 'view01'. Previews the first value of a 'Fold', if
 -- there is any.
 preview :: Fold a b s t -> s -> Maybe a
 preview optic = getFirst . runForget (optic (Forget (First . Just)))
@@ -95,7 +95,7 @@ anyOf optic p = getAny . foldMapOf optic (Any . p)
 
 -- | Folds over a 'Foldable' container.
 folded :: Foldable f => Fold a b (f a) t
-folded = cosecond (\_ -> ()) . wander traverse_
+folded = contrasecond (\_ -> ()) . wander traverse_
 
 folding :: Foldable f => (s -> f a) -> Fold a b s t
-folding f = cofirst f . folded
+folding f = contrafirst f . folded

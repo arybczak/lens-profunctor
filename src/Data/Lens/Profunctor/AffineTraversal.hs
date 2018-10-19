@@ -1,4 +1,4 @@
-module Data.Lens.Profunctor.AffTraversal
+module Data.Lens.Profunctor.AffineTraversal
   ( AffineTraversal
   , atraversal
   ) where
