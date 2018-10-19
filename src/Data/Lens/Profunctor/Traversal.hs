@@ -8,9 +8,8 @@ module Data.Lens.Profunctor.Traversal
 
 import Data.Profunctor
 import Data.Profunctor.Traversing
-import Data.Lens.Profunctor.Types
 
-type Traversal a b s t = forall p. Traversing p => Optic p a b s t
+import Data.Lens.Profunctor.Types
 
 -- | Map each element of a structure targeted by a 'Traversal', evaluate these
 -- actions from left to right, and collect the results.

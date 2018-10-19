@@ -1,6 +1,5 @@
 module Data.Lens.Profunctor.Lens
  ( Lens
- , Lens'
  , lens
  , vl
  , _1_2
@@ -9,6 +8,7 @@ module Data.Lens.Profunctor.Lens
  ) where
 
 import Data.Profunctor
+
 import Data.Lens.Profunctor.Types
 
 -- | Concrete representation of a lens.
@@ -26,10 +26,6 @@ instance Strong (LensC a b) where
   second' (LensC view_ update) = LensC (view_ . snd) (\(c, s) b -> (c, update s b))
 
 ----------------------------------------
-
-type Lens a b s t = forall p. Strong p => Optic p a b s t
-
-type Lens' a s = Lens a a s s
 
 lens :: (s -> a) -> (s -> b -> t) -> Lens a b s t
 lens view_ update =

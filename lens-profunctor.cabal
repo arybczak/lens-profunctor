@@ -16,7 +16,9 @@ extra-source-files:  ChangeLog.md
 cabal-version:       >=1.10
 
 library
-  exposed-modules:     Data.Lens.Profunctor
+  exposed-modules:     Data.Bicontravariant
+                       Data.Lens.Profunctor
+                       Data.Lens.Profunctor.AffFold
                        Data.Lens.Profunctor.AffTraversal
                        Data.Lens.Profunctor.Fold
                        Data.Lens.Profunctor.Getter

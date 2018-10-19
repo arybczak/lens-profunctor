@@ -1,6 +1,5 @@
 module Data.Lens.Profunctor.Iso
   ( Iso
-  , Iso'
   , iso
   , withIso
   , _Dual
@@ -17,6 +16,7 @@ module Data.Lens.Profunctor.Iso
 import Control.Applicative
 import Data.Monoid
 import Data.Profunctor
+
 import Data.Lens.Profunctor.Types
 
 -- | Concrete representation of an isomorphism.
@@ -27,10 +27,6 @@ instance Profunctor (IsoC a b) where
   dimap f g (IsoC from to) = IsoC (from . f) (g . to)
 
 ----------------------------------------
-
-type Iso a b s t = forall p. Profunctor p => Optic p a b s t
-
-type Iso' a s = Iso a a s s
 
 -- | Build a simple isomorphism from a pair of inverse functions.
 iso :: (s -> a) -> (b -> t) -> Iso a b s t
@@ -50,10 +46,10 @@ _Dual = iso Dual getDual
 _Endo :: Iso (Endo a) (Endo b) (a -> a) (b -> b)
 _Endo = iso Endo appEndo
 
-_All :: Iso' All Bool
+_All :: Iso All All Bool Bool
 _All = iso All getAll
 
-_Any :: Iso' Any Bool
+_Any :: Iso Any Any Bool Bool
 _Any = iso Any getAny
 
 _Sum :: Num a => Iso (Sum a) (Sum b) a b

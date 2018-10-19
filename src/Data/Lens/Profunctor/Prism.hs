@@ -1,6 +1,5 @@
 module Data.Lens.Profunctor.Prism
   ( Prism
-  , Prism'
   , prism
   , prism'
   , withPrism
@@ -13,6 +12,7 @@ module Data.Lens.Profunctor.Prism
   ) where
 
 import Data.Profunctor
+
 import Data.Lens.Profunctor.Types
 
 -- | Concrete representation of a prism.
@@ -37,10 +37,6 @@ instance Choice (PrismC a b) where
 
 ----------------------------------------
 
-type Prism a b s t = forall p. Choice p => Optic p a b s t
-
-type Prism' a s = Prism a a s s
-
 prism :: (s -> Either t a) -> (b -> t) -> Prism a b s t
 prism match build = dimap match (either id build) . right'
 
@@ -54,7 +50,7 @@ withPrism optic k = case optic (PrismC Right id) of
 
 ----------------------------------------
 
-only :: Eq a => a -> Prism' () a
+only :: Eq a => a -> Prism () () a a
 only a = prism' (\s -> if s == a then Just () else Nothing) (const a)
 
 _Left :: Prism a b (Either a c) (Either b c)
@@ -66,10 +62,10 @@ _Right = right'
 _Just :: Prism a b (Maybe a) (Maybe b)
 _Just = prism (maybe (Left Nothing) Right) Just
 
-_Nothing :: Prism' () (Maybe a)
+_Nothing :: Prism () () (Maybe a) (Maybe a)
 _Nothing = prism (maybe (Right ()) (Left . Just)) (const Nothing)
 
-_Show :: (Read a, Show a) => Prism' a String
+_Show :: (Read a, Show a) => Prism a a String String
 _Show = prism maybeRead show
   where
     maybeRead = \s -> case reads s of

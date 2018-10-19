@@ -1,5 +1,6 @@
 module Data.Lens.Profunctor
-  ( module Data.Lens.Profunctor.AffTraversal
+  ( module Data.Lens.Profunctor.AffFold
+  , module Data.Lens.Profunctor.AffTraversal
   , module Data.Lens.Profunctor.Fold
   , module Data.Lens.Profunctor.Getter
   , module Data.Lens.Profunctor.Iso
@@ -11,6 +12,7 @@ module Data.Lens.Profunctor
   , module Data.Lens.Profunctor.Types
   ) where
 
+import Data.Lens.Profunctor.AffFold
 import Data.Lens.Profunctor.AffTraversal
 import Data.Lens.Profunctor.Fold
 import Data.Lens.Profunctor.Getter
@@ -21,3 +23,4 @@ import Data.Lens.Profunctor.Re
 import Data.Lens.Profunctor.Review
 import Data.Lens.Profunctor.Traversal
 import Data.Lens.Profunctor.Types
+

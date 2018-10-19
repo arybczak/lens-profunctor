@@ -4,14 +4,15 @@ module Data.Lens.Profunctor.Review
   , unto
   ) where
 
+import Data.Bifunctor
 import Data.Profunctor
 import Data.Tagged
-import Data.Lens.Profunctor.Types
+import Data.Void
 
-type Review b t = Optic Tagged b b t t
+import Data.Lens.Profunctor.Types
 
 review :: Review b t -> b -> t
 review optic = unTagged . optic . Tagged
 
 unto :: (b -> t) -> Review b t
-unto f = rmap f . Tagged . unTagged
+unto f = first absurd . dimap absurd f
