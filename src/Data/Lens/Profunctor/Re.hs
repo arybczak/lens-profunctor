@@ -20,6 +20,14 @@ instance Bicontravariant p => Bifunctor (Re p a b) where
 instance Bifunctor p => Bicontravariant (Re p a b) where
   contrabimap f g (Re p) = Re (p . bimap g f)
 
+instance Strong p => Costrong (Re p a b) where
+  unfirst  (Re p) = Re (p . first')
+  unsecond (Re p) = Re (p . second')
+
+instance Costrong p => Strong (Re p a b) where
+  first'  (Re p) = Re (p . unfirst)
+  second' (Re p) = Re (p . unsecond)
+
 instance Choice p => Cochoice (Re p a b) where
   unleft  (Re p) = Re (p . left')
   unright (Re p) = Re (p . right')
@@ -30,7 +38,8 @@ instance Cochoice p => Choice (Re p a b) where
 
 ----------------------------------------
 
--- | Inverts optics, turning 'Iso' into 'Iso', 'Prism' into 'PrismaticGetter'
--- (and back) and 'Getter' into 'Review' (and back).
+-- | Inverts optics, turning around 'Iso' into 'Iso', 'Prism' into
+-- 'PrismaticGetter' (and back), 'Lens' into 'LensyReview' (and back) and
+-- 'Getter' into 'Review' (and back).
 re :: Optic (Re p a b) a b s t -> Optic p t s b a
 re optic = unRe (optic (Re id))

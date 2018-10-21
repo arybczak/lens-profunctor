@@ -12,6 +12,7 @@ module Data.Lens.Profunctor.Types
   , PrismaticGetter
   , AffineFold
   , Fold
+  , LensyReview
   , Review
   ) where
 
@@ -55,14 +56,14 @@ type Traversal a b s t =
 type Setter a b s t =
   forall p. Mapping p => Optic p a b s t
 
--- p = Forget. This is needed because without it 're' would turn 'Prism' into
--- 'Getter', but 'Getter' into 'Review', hence re . re /= id.
+-- p = Forget. This is needed because without it 're' would turn around 'Prism'
+-- into 'Getter', but 'Getter' into 'Review', hence re . re /= id.
 type PrismaticGetter a s =
   forall p. Cochoice p => Optic p a a s s
 
 -- p = Forget, view1 for extraction of exactly one value.
 type Getter a s =
-  forall p. (Bicontravariant p, Cochoice p) => Optic p a a s s
+  forall p. (Bicontravariant p, Cochoice p, Strong p) => Optic p a a s s
 
 -- p = ForgetM, view01 for extraction of at most one value.
 type AffineFold a b s t =
@@ -73,6 +74,10 @@ type AffineFold a b s t =
 type Fold a b s t =
   forall p. (Bicontravariant p, Cochoice p, Traversing p) => Optic p a b s t
 
--- p = Tagged, review for reviewing Iso or Prism.
+-- p = Tagged. Same concept as PrismaticGetter for re . re = id.
+type LensyReview b t
+  = forall p. Costrong p => Optic p b b t t
+
+-- p = Tagged, review for reviewing Iso, Prism or LensyReview.
 type Review b t =
-  forall p. (Bifunctor p, Choice p) => Optic p b b t t
+  forall p. (Bifunctor p, Choice p, Costrong p) => Optic p b b t t
